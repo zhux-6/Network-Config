@@ -15,6 +15,9 @@
 		{
 			"tag": "rule-set-client",
 			"detour": "🚀 节点选择"
+		},
+		{
+			"tag": "rule-set-client-direct"
 		}
 	],
 	"experimental": {
