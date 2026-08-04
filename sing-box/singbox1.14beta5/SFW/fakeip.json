@@ -716,22 +716,19 @@
 			},
 			{
 				"tag": "Ali-DNS",
-				"type": "tls",
-				"server": "223.5.5.5",
-				"server_port": 853
+				"type": "https",
+				"server": "https://dns.alidns.com/dns-query"
 			},
 			{
 				"tag": "Google-DNS",
-				"type": "tls",
-				"server": "8.8.8.8",
-				"server_port": 853,
+				"type": "https",
+				"server": "https://dns.google/dns-query",
 				"detour": "🚀 节点选择"
 			},
 			{
 				"tag": "Cloudflare-DNS",
-				"type": "tls",
-				"server": "1.1.1.1",
-				"server_port": 853,
+				"type": "https",
+				"server": "https://cloudflare-dns.com/dns-query",
 				"detour": "🚀 节点选择"
 			},
 			{
