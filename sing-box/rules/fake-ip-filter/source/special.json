@@ -1,0 +1,64 @@
+{
+	"version": 3,
+	"rules": [
+		{
+			"domain": [
+				"router.asus.com",
+				"routerlogin.net",
+				"routerlogin.com",
+				"tplinkwifi.net",
+				"melogin.cn",
+				"falogin.cn",
+				"miwifi.com",
+				"tendawifi.com",
+				"leike.cc",
+				"zte.home",
+				"p.to",
+				"msftconnecttest.com",
+				"msftncsi.com",
+				"ipv6.msftconnecttest.com",
+				"time.asia.apple.com",
+				"time.windows.com",
+				"time.nist.gov",
+				"pool.ntp.org",
+				"localhost.ptlogin2.qq.com",
+				"localhost.sec.qq.com",
+				"mesu.apple.com",
+				"swscan.apple.com",
+				"swquery.apple.com",
+				"swdownload.apple.com",
+				"swcdn.apple.com",
+				"custcache.amazonaws.com",
+				"heartbeat.belkin.com"
+			],
+			"domain_suffix": [
+				".lan",
+				".localdomain",
+				".example",
+				".invalid",
+				".localhost",
+				".test",
+				".local",
+				".home.arpa",
+				"msftconnecttest.com",
+				"msftncsi.com",
+				"pool.ntp.org",
+				"nintendo.net",
+				"nintendowifi.net",
+				"xboxlive.com",
+				"playstation.net",
+				"playstation.com",
+				"work.weixin.qq.com",
+				"linksys.com",
+				"linksyssmartwifi.com"
+			],
+			"domain_keyword": [
+				"stun"
+			],
+			"domain_regex": [
+				"^time\\.",
+				"^ntp\\."
+			]
+		}
+	]
+}
