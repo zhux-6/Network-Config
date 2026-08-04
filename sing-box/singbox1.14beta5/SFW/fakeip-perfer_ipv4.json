@@ -366,6 +366,14 @@
 			},
 			{
 				"action": "route",
+				"domain_suffix": [
+					"wd-gold.net",
+					"wd-turbo.com"
+				],
+				"outbound": "🎯 全球直连"
+			},
+			{
+				"action": "route",
 				"rule_set": [
 					"Github"
 				],
