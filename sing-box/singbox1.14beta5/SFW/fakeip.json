@@ -672,9 +672,23 @@
 				"http_client": "rule-set-client-direct"
 			},
 			{
-				"tag": "fake-ip-filter",
+				"tag": "FakeIP-Exclude-Gaming",
 				"type": "remote",
-				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter.srs",
+				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/gaming.srs",
+				"format": "binary",
+				"http_client": "rule-set-client-direct"
+			},
+			{
+				"tag": "FakeIP-Exclude-Network",
+				"type": "remote",
+				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/network.srs",
+				"format": "binary",
+				"http_client": "rule-set-client-direct"
+			},
+			{
+				"tag": "FakeIP-Exclude-System",
+				"type": "remote",
+				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/system.srs",
 				"format": "binary",
 				"http_client": "rule-set-client-direct"
 			}
@@ -759,7 +773,9 @@
 			{
 				"action": "route",
 				"rule_set": [
-					"fake-ip-filter"
+					"FakeIP-Exclude-Gaming",
+					"FakeIP-Exclude-Network",
+					"FakeIP-Exclude-System"
 				],
 				"server": "Ali-DNS"
 			},
