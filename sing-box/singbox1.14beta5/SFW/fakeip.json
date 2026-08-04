@@ -334,6 +334,14 @@
 				]
 			},
 			{
+				"action": "reject",
+				"ip_version": 6
+			},
+			{
+				"query_type": "AAAA",
+				"action": "reject"
+			},
+			{
 				"action": "route",
 				"domain_suffix": [
 					"browserleaks.com"
@@ -363,10 +371,6 @@
 					"GeoIP-Private"
 				],
 				"outbound": "🎯 全球直连"
-			},
-			{
-				"action": "reject",
-				"ip_version": 6
 			},
 			{
 				"action": "route",
@@ -822,8 +826,7 @@
 			},
 			{
 				"query_type": [
-					"A",
-					"AAAA"
+					"A"
 				],
 				"action": "route",
 				"server": "FakeIP-DNS"
