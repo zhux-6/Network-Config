@@ -1,0 +1,25 @@
+{
+  "version": 3,
+  "rules": [
+    {
+      "domain_suffix": [
+        "lan",
+        "local",
+        "localdomain",
+        "localhost",
+        "msftconnecttest.com",
+        "msftncsi.com"
+      ]
+    },
+    {
+      "domain": [
+        "localhost",
+        "www.msftconnecttest.com",
+        "www.msftncsi.com",
+        "connectivitycheck.gstatic.com",
+        "detectportal.firefox.com",
+        "captive.apple.com"
+      ]
+    }
+  ]
+}

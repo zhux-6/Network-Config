@@ -1,0 +1,24 @@
+{
+  "version": 3,
+  "rules": [
+    {
+      "domain_keyword": [
+        "stun",
+        "turn",
+        "ntp"
+      ]
+    },
+    {
+      "domain_suffix": [
+        "pool.ntp.org",
+        "ntp.org.cn"
+      ]
+    },
+    {
+      "domain": [
+        "time.windows.com",
+        "time.nist.gov"
+      ]
+    }
+  ]
+}
