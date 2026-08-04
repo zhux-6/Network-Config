@@ -368,7 +368,8 @@
 				"action": "route",
 				"domain_suffix": [
 					"wd-gold.net",
-					"wd-turbo.com"
+					"wd-turbo.com",
+					"mpvideo.qpic.cn",
 				],
 				"outbound": "🎯 全球直连"
 			},
