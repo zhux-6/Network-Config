@@ -763,6 +763,11 @@
 					"GeoSite-Private",
 					"FakeIP-Exclude-System"
 				],
+				"domain_suffix": [
+					"wd-gold.net",
+					"wd-turbo.com",
+					"mpvideo.qpic.cn"
+				],
 				"server": "Local-DNS"
 			},
 			{
