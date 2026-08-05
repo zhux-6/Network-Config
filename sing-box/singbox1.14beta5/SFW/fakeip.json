@@ -378,8 +378,7 @@
 					"bilibili-game",
 					"FakeIP-Exclude-Gaming",
 					"FakeIP-Exclude-Network",
-					"FakeIP-Exclude-System",
-					"FakeIP-Exclude-Special"
+					"FakeIP-Exclude-System"
 				],
 				"outbound": "🎯 全球直连"
 			},
@@ -697,13 +696,6 @@
 				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/system.srs",
 				"format": "binary",
 				"http_client": "rule-set-client-direct"
-			},
-			{
-				"tag": "FakeIP-Exclude-Special",
-				"type": "remote",
-				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/special.srs",
-				"format": "binary",
-				"http_client": "rule-set-client-direct"
 			}
 		],
 		"auto_detect_interface": true,
@@ -795,8 +787,7 @@
 				"rule_set": [
 					"FakeIP-Exclude-Gaming",
 					"FakeIP-Exclude-Network",
-					"FakeIP-Exclude-System",
-					"FakeIP-Exclude-Special"
+					"FakeIP-Exclude-System"
 				],
 				"server": "Ali-DNS"
 			},
