@@ -1,19 +1,24 @@
 {
-  "domain": [
-    "router.asus.com",
-    "routerlogin.net",
-    "routerlogin.com",
-    "tplinkwifi.net",
-    "melogin.cn",
-    "falogin.cn",
-    "miwifi.com",
-    "tendawifi.com",
-    "leike.cc",
-    "zte.home",
-    "p.to"
-  ],
-  "domain_suffix": [
-    "linksys.com",
-    "linksyssmartwifi.com"
-  ]
+	"version": 3,
+	"rules": [
+		{
+			"domain": [
+				"router.asus.com",
+				"routerlogin.net",
+				"routerlogin.com",
+				"tplinkwifi.net",
+				"melogin.cn",
+				"falogin.cn",
+				"miwifi.com",
+				"tendawifi.com",
+				"leike.cc",
+				"zte.home",
+				"p.to"
+			],
+			"domain_suffix": [
+				"linksys.com",
+				"linksyssmartwifi.com"
+			]
+		}
+	]
 }
