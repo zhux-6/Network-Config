@@ -6,25 +6,30 @@
         "nintendo.net",
         "playstation.net",
         "xboxlive.com",
+
         "pvp.net",
+
         "square-enix.com",
         "finalfantasyxiv.com",
+
         "battlenet.com.cn",
         "blizzard.cn",
         "steamcontent.com.cn",
+        "steamchina.com",
+
         "kurogame.com",
         "kurogames.com",
         "kurogame.xyz",
         "aki-game.com",
         "aki-game2.com",
         "aki-game.net",
-		"wmpvp.com",
-		"pwesports.cn",
-		"wanmei.com",
-		"5eplay.com",
-		"5eplaycdn.com",
-		"yunxinfw.com",
-		"steamchina.com"
+
+        "wmpvp.com",
+        "pwesports.cn",
+        "wanmei.com",
+
+        "5eplay.com",
+        "5eplaycdn.com"
       ]
     }
   ]

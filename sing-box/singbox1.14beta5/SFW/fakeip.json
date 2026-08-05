@@ -673,21 +673,21 @@
 			{
 				"tag": "FakeIP-Exclude-Gaming",
 				"type": "remote",
-				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/gaming.srs",
+				"url": "https://raw.githubusercontent.com/zhux-6/Network-Config/refs/heads/main/sing-box/rules/fake-ip-filter/compiled/gaming.srs",
 				"format": "binary",
 				"http_client": "rule-set-client-direct"
 			},
 			{
 				"tag": "FakeIP-Exclude-Network",
 				"type": "remote",
-				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/network.srs",
+				"url": "https://raw.githubusercontent.com/zhux-6/Network-Config/refs/heads/main/sing-box/rules/fake-ip-filter/compiled/network.srs",
 				"format": "binary",
 				"http_client": "rule-set-client-direct"
 			},
 			{
 				"tag": "FakeIP-Exclude-System",
 				"type": "remote",
-				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/system.srs",
+				"url": "https://raw.githubusercontent.com/zhux-6/Network-Config/refs/heads/main/sing-box/rules/fake-ip-filter/compiled/system.srs",
 				"format": "binary",
 				"http_client": "rule-set-client-direct"
 			}
