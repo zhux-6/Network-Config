@@ -45,7 +45,7 @@
 				"fdfe:dcba:9876::1/126"
 			],
 			"mtu": 1420,
-			"stack": "gvisor",
+			"stack": "mixed",
 			"auto_route": true,
 			"strict_route": true,
 			"auto_redirect": false,
@@ -331,13 +331,6 @@
 			},
 			{
 				"action": "route",
-				"domain_suffix": [
-					"browserleaks.com"
-				],
-				"outbound": "🚀 节点选择"
-			},
-			{
-				"action": "route",
 				"clash_mode": "direct",
 				"outbound": "🎯 全球直连"
 			},
@@ -357,6 +350,27 @@
 				"action": "route",
 				"rule_set": [
 					"GeoIP-Private"
+				],
+				"outbound": "🎯 全球直连"
+			},
+			{
+				"action": "route",
+				"domain_suffix": [
+					"wd-gold.net",
+					"wd-turbo.com",
+					"mpvideo.qpic.cn"
+				],
+				"outbound": "🎯 全球直连"
+			},
+			{
+				"action": "route",
+				"rule_set": [
+					"bilibili",
+					"bilibili-cdn",
+					"bilibili-game",
+					"FakeIP-Exclude-Gaming",
+					"FakeIP-Exclude-Network",
+					"FakeIP-Exclude-System"
 				],
 				"outbound": "🎯 全球直连"
 			},
@@ -390,15 +404,6 @@
 					"TikTok"
 				],
 				"outbound": "🎬 TikTok"
-			},
-			{
-				"action": "route",
-				"rule_set": [
-					"bilibili",
-					"bilibili-cdn",
-					"bilibili-game"
-				],
-				"outbound": "🎯 全球直连"
 			},
 			{
 				"action": "route",
@@ -683,13 +688,6 @@
 				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/system.srs",
 				"format": "binary",
 				"http_client": "rule-set-client-direct"
-			},
-			{
-				"tag": "FakeIP-Exclude-Special",
-				"type": "remote",
-				"url": "https://testingcf.jsdelivr.net/gh/zhux-6/Network-Config@main/sing-box/rules/fake-ip-filter/compiled/special.srs",
-				"format": "binary",
-				"http_client": "rule-set-client-direct"
 			}
 		],
 		"auto_detect_interface": true,
@@ -776,8 +774,7 @@
 				"rule_set": [
 					"FakeIP-Exclude-Gaming",
 					"FakeIP-Exclude-Network",
-					"FakeIP-Exclude-System",
-					"FakeIP-Exclude-Special"
+					"FakeIP-Exclude-System"
 				],
 				"server": "Ali-DNS"
 			},
