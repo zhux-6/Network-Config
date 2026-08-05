@@ -1,24 +1,19 @@
 {
-  "version": 3,
-  "rules": [
-    {
-      "domain_keyword": [
-        "stun",
-        "turn",
-        "ntp"
-      ]
-    },
-    {
-      "domain_suffix": [
-        "pool.ntp.org",
-        "ntp.org.cn"
-      ]
-    },
-    {
-      "domain": [
-        "time.windows.com",
-        "time.nist.gov"
-      ]
-    }
+  "domain": [
+    "router.asus.com",
+    "routerlogin.net",
+    "routerlogin.com",
+    "tplinkwifi.net",
+    "melogin.cn",
+    "falogin.cn",
+    "miwifi.com",
+    "tendawifi.com",
+    "leike.cc",
+    "zte.home",
+    "p.to"
+  ],
+  "domain_suffix": [
+    "linksys.com",
+    "linksyssmartwifi.com"
   ]
 }

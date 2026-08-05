@@ -339,13 +339,6 @@
 			},
 			{
 				"action": "route",
-				"domain_suffix": [
-					"browserleaks.com"
-				],
-				"outbound": "🚀 节点选择"
-			},
-			{
-				"action": "route",
 				"clash_mode": "direct",
 				"outbound": "🎯 全球直连"
 			},
@@ -380,6 +373,19 @@
 			{
 				"action": "route",
 				"rule_set": [
+					"bilibili",
+					"bilibili-cdn",
+					"bilibili-game",
+					"FakeIP-Exclude-Gaming",
+					"FakeIP-Exclude-Network",
+					"FakeIP-Exclude-System",
+					"FakeIP-Exclude-Special"
+				],
+				"outbound": "🎯 全球直连"
+			},
+			{
+				"action": "route",
+				"rule_set": [
 					"Github"
 				],
 				"outbound": "📦 Github"
@@ -407,15 +413,6 @@
 					"TikTok"
 				],
 				"outbound": "🎬 TikTok"
-			},
-			{
-				"action": "route",
-				"rule_set": [
-					"bilibili",
-					"bilibili-cdn",
-					"bilibili-game"
-				],
-				"outbound": "🎯 全球直连"
 			},
 			{
 				"action": "route",
@@ -760,6 +757,12 @@
 				"action": "route",
 				"clash_mode": "global",
 				"server": "Cloudflare-DNS"
+			},
+			{
+				"query_type": [
+					"AAAA"
+				],
+				"action": "reject"
 			},
 			{
 				"action": "route",

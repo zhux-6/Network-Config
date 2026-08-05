@@ -1,25 +1,35 @@
 {
-  "version": 3,
-  "rules": [
-    {
-      "domain_suffix": [
-        "lan",
-        "local",
-        "localdomain",
-        "localhost",
-        "msftconnecttest.com",
-        "msftncsi.com"
-      ]
-    },
-    {
-      "domain": [
-        "localhost",
-        "www.msftconnecttest.com",
-        "www.msftncsi.com",
-        "connectivitycheck.gstatic.com",
-        "detectportal.firefox.com",
-        "captive.apple.com"
-      ]
-    }
-  ]
+	"domain": [
+		"msftconnecttest.com",
+		"msftncsi.com",
+		"ipv6.msftconnecttest.com",
+		"time.asia.apple.com",
+		"time.windows.com",
+		"time.nist.gov",
+		"mesu.apple.com",
+		"swscan.apple.com",
+		"swquery.apple.com",
+		"swdownload.apple.com",
+		"swcdn.apple.com",
+		"custcache.amazonaws.com",
+		"heartbeat.belkin.com",
+		"localhost.ptlogin2.qq.com",
+		"localhost.sec.qq.com"
+	],
+	"domain_suffix": [
+		".lan",
+		".localdomain",
+		".example",
+		".invalid",
+		".localhost",
+		".local",
+		".home.arpa",
+		"msftconnecttest.com",
+		"msftncsi.com",
+		"pool.ntp.org"
+	],
+	"domain_regex": [
+		"^time\\.(apple|windows|nist|cloudflare|google)\\.com$",
+		"^ntp\\."
+	]
 }
