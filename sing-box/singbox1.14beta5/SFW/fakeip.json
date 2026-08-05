@@ -370,7 +370,6 @@
 					"bilibili",
 					"bilibili-cdn",
 					"bilibili-game",
-					"FakeIP-Exclude-Gaming",
 					"FakeIP-Exclude-Network",
 					"FakeIP-Exclude-System"
 				],
@@ -449,7 +448,8 @@
 				"rule_set": [
 					"Category-Games",
 					"Steam",
-					"EpicGames"
+					"EpicGames",
+					"FakeIP-Exclude-Gaming"
 				],
 				"outbound": "🎮 游戏"
 			},
