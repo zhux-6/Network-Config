@@ -45,7 +45,7 @@
 				"fdfe:dcba:9876::1/126"
 			],
 			"mtu": 1420,
-			"stack": "mixed",
+			"stack": "gvisor",
 			"auto_route": true,
 			"strict_route": true,
 			"auto_redirect": false,
