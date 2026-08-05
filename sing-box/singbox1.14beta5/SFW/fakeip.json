@@ -333,7 +333,6 @@
 					"Category-Trackers"
 				]
 			},
-
 			{
 				"action": "reject",
 				"ip_version": 6
@@ -366,6 +365,15 @@
 				"action": "route",
 				"rule_set": [
 					"GeoIP-Private"
+				],
+				"outbound": "🎯 全球直连"
+			},
+			{
+				"action": "route",
+				"domain_suffix": [
+					"wd-gold.net",
+					"wd-turbo.com",
+					"mpvideo.qpic.cn"
 				],
 				"outbound": "🎯 全球直连"
 			},

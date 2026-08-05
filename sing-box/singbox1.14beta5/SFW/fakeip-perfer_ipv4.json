@@ -369,7 +369,7 @@
 				"domain_suffix": [
 					"wd-gold.net",
 					"wd-turbo.com",
-					"mpvideo.qpic.cn",
+					"mpvideo.qpic.cn"
 				],
 				"outbound": "🎯 全球直连"
 			},
@@ -714,6 +714,7 @@
 		"default_http_client": "rule-set-client"
 	},
 	"dns": {
+		"strategy": "prefer_ipv4",
 		"servers": [
 			{
 				"tag": "Local-DNS",
@@ -836,7 +837,6 @@
 		],
 		"final": "Google-DNS",
 		"reverse_mapping": true,
-		"strategy": "prefer_ipv4",
 		"optimistic": true
 	},
 	"endpoints": []
