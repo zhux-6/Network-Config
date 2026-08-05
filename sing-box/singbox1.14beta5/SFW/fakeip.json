@@ -760,7 +760,8 @@
 			{
 				"action": "route",
 				"rule_set": [
-					"GeoSite-Private"
+					"GeoSite-Private",
+					"FakeIP-Exclude-System"
 				],
 				"server": "Local-DNS"
 			},
@@ -787,8 +788,7 @@
 				"action": "route",
 				"rule_set": [
 					"FakeIP-Exclude-Gaming",
-					"FakeIP-Exclude-Network",
-					"FakeIP-Exclude-System"
+					"FakeIP-Exclude-Network"
 				],
 				"server": "Ali-DNS"
 			},
