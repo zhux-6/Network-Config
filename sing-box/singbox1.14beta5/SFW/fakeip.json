@@ -43,7 +43,8 @@
 			"tag": "tun-in",
 			"interface_name": "tun0",
 			"address": [
-				"172.18.0.1/30"
+				"172.18.0.1/30",
+				"fdfe:dcba:9876::1/126"
 			],
 			"mtu": 1500,
 			"dns_mode": "hijack",
@@ -326,15 +327,9 @@
 				"protocol": "dns"
 			},
 			{
+				"ip_version": 6,
 				"action": "reject",
-				"rule_set": [
-					"Category-Ads",
-					"Category-Trackers"
-				]
-			},
-			{
-				"action": "reject",
-				"ip_version": 6
+				"method": "default"
 			},
 			{
 				"action": "route",
