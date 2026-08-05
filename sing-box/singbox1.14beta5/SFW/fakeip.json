@@ -446,6 +446,13 @@
 			{
 				"action": "route",
 				"rule_set": [
+					"FakeIP-Exclude-Gaming"
+				],
+				"outbound": "🎯 全球直连"
+			},
+			{
+				"action": "route",
+				"rule_set": [
 					"Category-Games",
 					"Steam",
 					"EpicGames",
