@@ -461,8 +461,7 @@
 				"rule_set": [
 					"Category-Games",
 					"Steam",
-					"EpicGames",
-					"FakeIP-Exclude-Gaming"
+					"EpicGames"
 				],
 				"outbound": "🎮 游戏"
 			},
