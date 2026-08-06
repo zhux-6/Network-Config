@@ -308,15 +308,22 @@
 	"route": {
 		"rules": [
 			{
+				"action": "sniff",
+				"inbound": [
+					"tun-in"
+				]
+			},
+			{
 				"ip_version": 6,
 				"action": "reject",
 				"method": "default"
 			},
 			{
-				"action": "sniff",
-				"inbound": [
-					"tun-in"
-				]
+				"ip_cidr": [
+					"::/0"
+				],
+				"action": "reject",
+				"method": "default"
 			},
 			{
 				"action": "hijack-dns",
