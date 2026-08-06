@@ -308,6 +308,11 @@
 	"route": {
 		"rules": [
 			{
+				"ip_version": 6,
+				"action": "reject",
+				"method": "default"
+			},
+			{
 				"action": "sniff",
 				"inbound": [
 					"tun-in"
@@ -316,11 +321,6 @@
 			{
 				"action": "hijack-dns",
 				"protocol": "dns"
-			},
-			{
-				"ip_version": 6,
-				"action": "reject",
-				"method": "default"
 			},
 			{
 				"action": "route",
