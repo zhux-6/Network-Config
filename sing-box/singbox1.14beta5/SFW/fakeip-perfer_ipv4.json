@@ -46,7 +46,7 @@
 				"172.18.0.1/30",
 				"fdfe:dcba:9876::1/126"
 			],
-			"mtu": 1450,
+			"mtu": 1500,
 			"dns_mode": "hijack",
 			"stack": "mixed",
 			"endpoint_independent_nat": true,
@@ -59,6 +59,12 @@
 				"fc00::/7",
 				"fe80::/10"
 			]
+		},
+		{
+			"type": "mixed",
+			"tag": "docker-proxy",
+			"listen": "127.0.0.1",
+			"listen_port": 7890
 		}
 	],
 	"outbounds": [
@@ -327,13 +333,6 @@
 				"protocol": "dns"
 			},
 			{
-				"action": "reject",
-				"rule_set": [
-					"Category-Ads",
-					"Category-Trackers"
-				]
-			},
-			{
 				"action": "route",
 				"clash_mode": "direct",
 				"outbound": "🎯 全球直连"
@@ -374,7 +373,8 @@
 					"bilibili-game",
 					"FakeIP-Exclude-Gaming",
 					"FakeIP-Exclude-Network",
-					"FakeIP-Exclude-System"
+					"FakeIP-Exclude-System",
+					"FakeIP-Exclude-Special"
 				],
 				"outbound": "🎯 全球直连"
 			},
@@ -483,79 +483,79 @@
 				"type": "remote",
 				"format": "binary",
 				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs"
 			},
 			{
 				"tag": "OpenAI",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-openai.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-openai.srs"
 			},
 			{
 				"tag": "Claude",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-anthropic.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-anthropic.srs"
 			},
 			{
 				"tag": "Gemini",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-google-gemini.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google-gemini.srs"
 			},
 			{
 				"tag": "Bing",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bing.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-bing.srs"
 			},
 			{
 				"tag": "Bing-CN",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bing@cn.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-bing@cn.srs"
 			},
 			{
 				"tag": "Microsoft",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-microsoft.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-microsoft.srs"
 			},
 			{
 				"tag": "Youtube",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-youtube.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs"
 			},
 			{
 				"tag": "Twitch",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-twitch.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-twitch.srs"
 			},
 			{
 				"tag": "Spotify",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-spotify.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-spotify.srs"
 			},
 			{
 				"tag": "Github",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-github.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs"
 			},
 			{
 				"tag": "Netflix",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-netflix.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-netflix.srs"
 			},
 			{
 				"tag": "Disney",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-disney.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-disney.srs"
 			},
 			{
 				"tag": "bilibili",
@@ -610,32 +610,31 @@
 				"tag": "TikTok",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-tiktok.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tiktok.srs"
 			},
 			{
 				"tag": "Telegram",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-telegram.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs"
 			},
 			{
 				"tag": "Telegram_IP",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geoip/geoip-telegram.srs"
+				"url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs"
 			},
 			{
 				"tag": "Google",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-google.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs"
 			},
 			{
 				"tag": "Category-Ads",
 				"type": "remote",
 				"format": "binary",
-				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ads-all.srs"
 			},
 			{
 				"tag": "Category-Trackers",
@@ -649,28 +648,28 @@
 				"type": "remote",
 				"format": "binary",
 				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-private.srs"
 			},
 			{
 				"tag": "GeoSite-Private",
 				"type": "remote",
 				"format": "binary",
 				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs"
 			},
 			{
 				"tag": "GeoIP-CN",
 				"type": "remote",
 				"format": "binary",
 				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"
 			},
 			{
 				"tag": "GeoLocation-!CN",
 				"type": "remote",
 				"format": "binary",
 				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs"
 			},
 			{
 				"tag": "FakeIP-Exclude-Gaming",
@@ -692,6 +691,13 @@
 				"format": "binary",
 				"http_client": "rule-set-client-direct",
 				"url": "https://raw.githubusercontent.com/zhux-6/Network-Config/refs/heads/main/sing-box/rules/fake-ip-filter/compiled/system.srs"
+			},
+			{
+				"tag": "FakeIP-Exclude-Special",
+				"type": "remote",
+				"format": "binary",
+				"http_client": "rule-set-client-direct",
+				"url": "https://raw.githubusercontent.com/zhux-6/Network-Config/refs/heads/main/sing-box/rules/fake-ip-filter/compiled/special.srs"
 			}
 		],
 		"auto_detect_interface": true,
@@ -752,7 +758,13 @@
 				"action": "route",
 				"rule_set": [
 					"GeoSite-Private",
-					"FakeIP-Exclude-System"
+					"FakeIP-Exclude-System",
+					"FakeIP-Exclude-Special"
+				],
+				"domain_suffix": [
+					"wd-gold.net",
+					"wd-turbo.com",
+					"mpvideo.qpic.cn"
 				],
 				"server": "Local-DNS"
 			},
@@ -826,7 +838,12 @@
 		],
 		"final": "Google-DNS",
 		"reverse_mapping": true,
-		"optimistic": true
-	},
+		"optimistic": {
+			"enabled": true,
+			"timeout": "5m"
+		},
+		"cache_capacity": 16384,
+		"timeout": "10s"
+		},
 	"endpoints": []
 }
