@@ -361,7 +361,8 @@
 					"bilibili-game",
 					"FakeIP-Exclude-Gaming",
 					"FakeIP-Exclude-Network",
-					"FakeIP-Exclude-System"
+					"FakeIP-Exclude-System",
+					"FakeIP-Exclude-Special"
 				],
 				"outbound": "🎯 全球直连"
 			},
@@ -678,6 +679,13 @@
 				"format": "binary",
 				"http_client": "rule-set-client-direct",
 				"url": "https://raw.githubusercontent.com/zhux-6/Network-Config/refs/heads/main/sing-box/rules/fake-ip-filter/compiled/system.srs"
+			},
+			{
+				"tag": "FakeIP-Exclude-Special",
+				"type": "remote",
+				"format": "binary",
+				"http_client": "rule-set-client-direct",
+				"url": "https://raw.githubusercontent.com/zhux-6/Network-Config/refs/heads/main/sing-box/rules/fake-ip-filter/compiled/special.srs"
 			}
 		],
 		"auto_detect_interface": true,
@@ -742,7 +750,8 @@
 				"action": "route",
 				"rule_set": [
 					"GeoSite-Private",
-					"FakeIP-Exclude-System"
+					"FakeIP-Exclude-System",
+					"FakeIP-Exclude-Special"
 				],
 				"server": "Local-DNS"
 			},
