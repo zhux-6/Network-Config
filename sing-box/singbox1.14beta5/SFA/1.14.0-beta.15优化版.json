@@ -308,10 +308,7 @@
 	"route": {
 		"rules": [
 			{
-				"action": "sniff",
-				"inbound": [
-					"tun-in"
-				]
+				"action": "sniff"
 			},
 			{
 				"ip_version": 6,
@@ -342,13 +339,7 @@
 			{
 				"action": "route",
 				"rule_set": [
-					"GeoSite-Private"
-				],
-				"outbound": "🎯 全球直连"
-			},
-			{
-				"action": "route",
-				"rule_set": [
+					"GeoSite-Private",
 					"GeoIP-Private"
 				],
 				"outbound": "🎯 全球直连"
@@ -739,7 +730,7 @@
 			{
 				"action": "route",
 				"clash_mode": "global",
-				"server": "Cloudflare-DNS"
+				"server": "FakeIP-DNS"
 			},
 			{
 				"query_type": [
@@ -825,7 +816,12 @@
 		"final": "Google-DNS",
 		"reverse_mapping": true,
 		"strategy": "ipv4_only",
-		"optimistic": true
+		"optimistic": {
+			"enabled": true,
+			"timeout": "5m"
+		},
+		"cache_capacity": 16384,
+		"timeout": "10s"
 	},
 	"endpoints": []
 }
