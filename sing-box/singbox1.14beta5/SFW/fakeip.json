@@ -64,7 +64,7 @@
 			"type": "mixed",
 			"tag": "docker-proxy",
 			"listen": "127.0.0.1",
-			"listen_port": 7890
+			"listen_port": 7897
 		}
 	],
 	"outbounds": [
