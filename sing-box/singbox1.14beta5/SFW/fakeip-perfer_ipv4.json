@@ -393,7 +393,8 @@
 			{
 				"action": "route",
 				"rule_set": [
-					"Github"
+					"Github",
+					"Docker"
 				],
 				"outbound": "📦 Github"
 			},
@@ -563,6 +564,12 @@
 				"type": "remote",
 				"format": "binary",
 				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs"
+			},
+			{
+				"tag": "Docker",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-docker.srs"
 			},
 			{
 				"tag": "Netflix",
@@ -838,6 +845,7 @@
 				"action": "route",
 				"rule_set": [
 					"Github",
+					"Docker",
 					"OpenAI",
 					"Claude",
 					"Gemini",
