@@ -91,56 +91,6 @@
 		},
 		{
 			"type": "selector",
-			"tag": "🌐 入口选择",
-			"interrupt_exist_connections": true,
-			"outbounds": [
-				"🇹🇼 台湾-自动测速",
-				"🇭🇰 香港-自动测速",
-				"🇸🇬 新加坡-自动测速"
-			]
-		},
-		{
-			"type": "selector",
-			"tag": "🇭🇰 香港",
-			"interrupt_exist_connections": true,
-			"outbounds": [
-				"🇭🇰 香港-自动测速"
-			]
-		},
-		{
-			"type": "selector",
-			"tag": "🇹🇼 台湾",
-			"interrupt_exist_connections": true,
-			"outbounds": [
-				"🇹🇼 台湾-自动测速"
-			]
-		},
-		{
-			"type": "selector",
-			"tag": "🇸🇬 新加坡",
-			"interrupt_exist_connections": true,
-			"outbounds": [
-				"🇸🇬 新加坡-自动测速"
-			]
-		},
-		{
-			"type": "selector",
-			"tag": "🇯🇵 日本",
-			"interrupt_exist_connections": true,
-			"outbounds": [
-				"🇯🇵 日本-自动测速"
-			]
-		},
-		{
-			"type": "selector",
-			"tag": "🇺🇸 美国",
-			"interrupt_exist_connections": true,
-			"outbounds": [
-				"🇺🇸 美国-自动测速"
-			]
-		},
-		{
-			"type": "selector",
 			"tag": "🪟 微软",
 			"interrupt_exist_connections": true,
 			"outbounds": [
@@ -276,6 +226,55 @@
 				"☁️ GCP出口",
 				"🎯 全球直连",
 				"🐟 漏网之鱼"
+			]
+		},
+		{
+			"type": "urltest",
+			"tag": "🌐 入口选择",
+			"outbounds": [],
+			"url": "https://www.gstatic.com/generate_204",
+			"interval": "2m",
+			"tolerance": 50,
+			"interrupt_exist_connections": false
+		},
+		{
+			"type": "selector",
+			"tag": "🇭🇰 香港",
+			"interrupt_exist_connections": true,
+			"outbounds": [
+				"🇭🇰 香港-自动测速"
+			]
+		},
+		{
+			"type": "selector",
+			"tag": "🇹🇼 台湾",
+			"interrupt_exist_connections": true,
+			"outbounds": [
+				"🇹🇼 台湾-自动测速"
+			]
+		},
+		{
+			"type": "selector",
+			"tag": "🇸🇬 新加坡",
+			"interrupt_exist_connections": true,
+			"outbounds": [
+				"🇸🇬 新加坡-自动测速"
+			]
+		},
+		{
+			"type": "selector",
+			"tag": "🇯🇵 日本",
+			"interrupt_exist_connections": true,
+			"outbounds": [
+				"🇯🇵 日本-自动测速"
+			]
+		},
+		{
+			"type": "selector",
+			"tag": "🇺🇸 美国",
+			"interrupt_exist_connections": true,
+			"outbounds": [
+				"🇺🇸 美国-自动测速"
 			]
 		},
 		{
