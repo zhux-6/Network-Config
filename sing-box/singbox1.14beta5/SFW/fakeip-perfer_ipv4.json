@@ -93,7 +93,11 @@
 			"type": "selector",
 			"tag": "🌐 入口选择",
 			"interrupt_exist_connections": true,
-			"outbounds": []
+			"outbounds": [
+				"🇹🇼 台湾-自动测速",
+				"🇭🇰 香港-自动测速",
+				"🇸🇬 新加坡-自动测速"
+			]
 		},
 		{
 			"type": "selector",
