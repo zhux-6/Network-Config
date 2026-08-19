@@ -374,7 +374,16 @@
 					"FakeIP-Exclude-Gaming",
 					"FakeIP-Exclude-Network",
 					"FakeIP-Exclude-System",
-					"FakeIP-Exclude-Special"
+					"FakeIP-Exclude-Special",
+					"game-accelerator-cn"
+				],
+				"outbound": "🎯 全球直连"
+			},
+			{
+				"action": "route",
+				"rule_set": [
+					"kurogames",
+					"games-cn"
 				],
 				"outbound": "🎯 全球直连"
 			},
@@ -452,6 +461,13 @@
 					"Category-Games",
 					"Steam",
 					"EpicGames"
+				],
+				"outbound": "🎮 游戏"
+			},
+			{
+				"action": "route",
+				"rule_set": [
+					"games"
 				],
 				"outbound": "🎮 游戏"
 			},
@@ -561,50 +577,67 @@
 				"tag": "bilibili",
 				"type": "remote",
 				"format": "binary",
-				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-bilibili.srs"
 			},
 			{
 				"tag": "bilibili@!cn",
 				"type": "remote",
 				"format": "binary",
-				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili@!cn.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-bilibili@!cn.srs"
 			},
 			{
 				"tag": "bilibili-cdn",
 				"type": "remote",
 				"format": "binary",
-				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili-cdn.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-bilibili-cdn.srs"
 			},
 			{
 				"tag": "bilibili-game",
 				"type": "remote",
 				"format": "binary",
-				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili-game.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-bilibili-game.srs"
 			},
 			{
 				"tag": "Steam",
 				"type": "remote",
 				"format": "binary",
-				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/steam.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-steam.srs"
+			},
+			{
+				"tag": "game-accelerator-cn",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-game-accelerator-cn.srs"
+			},
+			{
+				"tag": "kurogames",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-kurogames.srs"
+			},
+			{
+				"tag": "games-cn",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-games-cn.srs"
+			},
+			{
+				"tag": "games",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-games-!cn.srs"
 			},
 			{
 				"tag": "EpicGames",
 				"type": "remote",
 				"format": "binary",
-				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/epicgames.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-epicgames.srs"
 			},
 			{
 				"tag": "Category-Games",
 				"type": "remote",
 				"format": "binary",
-				"http_client": "rule-set-client-direct",
-				"url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-games.srs"
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-games.srs"
 			},
 			{
 				"tag": "TikTok",
@@ -622,7 +655,7 @@
 				"tag": "Telegram_IP",
 				"type": "remote",
 				"format": "binary",
-				"url": "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geoip/geoip-telegram.srs"
+				"url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"
 			},
 			{
 				"tag": "Google",
@@ -648,7 +681,7 @@
 				"type": "remote",
 				"format": "binary",
 				"http_client": "rule-set-client-direct",
-				"url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-private.srs"
+				"url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs"
 			},
 			{
 				"tag": "GeoSite-Private",
@@ -759,7 +792,8 @@
 				"rule_set": [
 					"GeoSite-Private",
 					"FakeIP-Exclude-System",
-					"FakeIP-Exclude-Special"
+					"FakeIP-Exclude-Special",
+					"game-accelerator-cn"
 				],
 				"domain_suffix": [
 					"wd-gold.net",
@@ -774,7 +808,9 @@
 					"GeoLocation-CN",
 					"bilibili",
 					"bilibili-cdn",
-					"bilibili-game"
+					"bilibili-game",
+					"games-cn",
+					"kurogames"
 				],
 				"server": "Ali-DNS"
 			},
@@ -823,6 +859,13 @@
 			{
 				"action": "route",
 				"rule_set": [
+					"games"
+				],
+				"server": "FakeIP-DNS"
+			},
+			{
+				"action": "route",
+				"rule_set": [
 					"GeoLocation-!CN"
 				],
 				"server": "FakeIP-DNS"
@@ -844,6 +887,6 @@
 		},
 		"cache_capacity": 16384,
 		"timeout": "10s"
-		},
+	},
 	"endpoints": []
 }
