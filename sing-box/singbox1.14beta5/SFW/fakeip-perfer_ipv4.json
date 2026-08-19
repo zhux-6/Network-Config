@@ -805,12 +805,16 @@
 					"FakeIP-Exclude-Special",
 					"game-accelerator-cn"
 				],
+				"server": "Local-DNS"
+			},
+			{
+				"action": "route",
 				"domain_suffix": [
 					"wd-gold.net",
 					"wd-turbo.com",
 					"mpvideo.qpic.cn"
 				],
-				"server": "Local-DNS"
+				"server": "Ali-DNS"
 			},
 			{
 				"action": "route",
