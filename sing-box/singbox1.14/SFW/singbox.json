@@ -681,7 +681,7 @@
 					"github",
 					"docker",
 					"gitlab",
-					"geosite-jetbrains"
+					"jetbrains"
 				],
 				"outbound": "📦 Github"
 			},
@@ -911,6 +911,7 @@
 					"github",
 					"gitlab",
 					"docker",
+					"jetbrains",
 					"paypal",
 					"kaspersky",
 					"kaspersky@cn",
@@ -934,14 +935,6 @@
 					"google-play"
 				],
 				"url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/{tag}.srs",
-				"update_interval": "48h0m0s"
-			},
-			{
-				"type": "remote",
-				"tag": [
-					"geosite-jetbrains"
-				],
-				"url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/{tag}.srs",
 				"update_interval": "48h0m0s"
 			},
 			{
