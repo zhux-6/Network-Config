@@ -472,47 +472,7 @@
 				"action": "respond",
 				"race": true
 			},
-			{
-				"action": "evaluate",
-				"rule_set": [
-					"geolocation-!cn"
-				],
-				"server": "Google-DNS",
-				"tag": "foreign_google"
-			},
-			{
-				"match_response": "foreign_google",
-				"action": "respond",
-				"race": true
-			},
-			{
-				"action": "evaluate",
-				"rule_set": [
-					"geolocation-!cn"
-				],
-				"server": "Cloudflare-DNS",
-				"tag": "foreign_cloudflare",
-				"speculative": true
-			},
-			{
-				"match_response": "foreign_cloudflare",
-				"action": "respond",
-				"race": true
-			},
-			{
-				"action": "evaluate",
-				"rule_set": [
-					"geolocation-!cn"
-				],
-				"server": "Quad9-DNS",
-				"tag": "foreign_quad9",
-				"speculative": true
-			},
-			{
-				"match_response": "foreign_quad9",
-				"action": "respond",
-				"race": true
-			},
+
 			{
 				"action": "evaluate",
 				"server": "Google-DNS",
