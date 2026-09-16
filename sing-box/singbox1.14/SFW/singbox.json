@@ -546,28 +546,6 @@
 				"race": true
 			},
 			{
-				"action": "evaluate",
-				"server": "Ali-DNS",
-				"tag": "fallback_ali",
-				"speculative": true
-			},
-			{
-				"match_response": "fallback_ali",
-				"action": "respond",
-				"race": true
-			},
-			{
-				"action": "evaluate",
-				"server": "Tencent-DNS",
-				"tag": "fallback_tencent",
-				"speculative": true
-			},
-			{
-				"match_response": "fallback_tencent",
-				"action": "respond",
-				"race": true
-			},
-			{
 				"server": "FakeIP-DNS"
 			}
 		],
