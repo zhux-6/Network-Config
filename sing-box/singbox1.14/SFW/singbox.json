@@ -702,7 +702,8 @@
 				"rule_set": [
 					"github",
 					"docker",
-					"gitlab"
+					"gitlab",
+					"geosite-jetbrains"
 				],
 				"outbound": "📦 Github"
 			},
@@ -959,6 +960,14 @@
 			},
 			{
 				"type": "remote",
+				"tag": [
+					"geosite-jetbrains"
+				],
+				"url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/{tag}.srs",
+				"update_interval": "48h0m0s"
+			},
+			{
+				"type": "remote",
 				"tag": "geoip-cn",
 				"url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
 				"update_interval": "48h0m0s"
@@ -1026,9 +1035,7 @@
 			"type": "selector",
 			"tag": "☁️ GCP出口",
 			"interrupt_exist_connections": true,
-			"outbounds": [
-			
-			]
+			"outbounds": []
 		},
 		{
 			"type": "selector",
@@ -1182,9 +1189,7 @@
 		{
 			"type": "selector",
 			"tag": "🌐 入口选择",
-			"outbounds": [
-				
-			],
+			"outbounds": [],
 			"interrupt_exist_connections": false
 		},
 		{
@@ -1230,9 +1235,7 @@
 		{
 			"type": "urltest",
 			"tag": "🇭🇰 香港-自动测速",
-			"outbounds": [
-		
-			],
+			"outbounds": [],
 			"url": "https://cp.cloudflare.com/generate_204",
 			"interval": "5m",
 			"tolerance": 50,
@@ -1241,9 +1244,7 @@
 		{
 			"type": "urltest",
 			"tag": "🇹🇼 台湾-自动测速",
-			"outbounds": [
-	
-			],
+			"outbounds": [],
 			"url": "https://www.gstatic.com/generate_204",
 			"interval": "2m",
 			"tolerance": 30,
@@ -1252,9 +1253,7 @@
 		{
 			"type": "urltest",
 			"tag": "🇸🇬 新加坡-自动测速",
-			"outbounds": [
-		
-			],
+			"outbounds": [],
 			"url": "https://www.gstatic.com/generate_204",
 			"interval": "5m",
 			"tolerance": 50,
@@ -1263,9 +1262,7 @@
 		{
 			"type": "urltest",
 			"tag": "🇯🇵 日本-自动测速",
-			"outbounds": [
-	
-			],
+			"outbounds": [],
 			"url": "https://www.gstatic.com/generate_204",
 			"interval": "5m",
 			"tolerance": 50,
@@ -1274,9 +1271,7 @@
 		{
 			"type": "urltest",
 			"tag": "🇺🇸 美国-自动测速",
-			"outbounds": [
-				
-			],
+			"outbounds": [],
 			"url": "https://www.gstatic.com/generate_204",
 			"interval": "5m",
 			"tolerance": 50,
