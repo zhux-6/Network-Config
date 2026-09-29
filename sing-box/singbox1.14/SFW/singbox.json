@@ -975,6 +975,7 @@
 					}
 				]
 			},
+			
 			{
 				"type": "inline",
 				"tag": "local-names",
