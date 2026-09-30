@@ -24,7 +24,7 @@
 			"path": "cache.db",
 			"store_fakeip": true,
 			"store_dns": true,
-			"cache_id": "sfw-1.14.2-reviewed"
+			"cache_id": "sfw-1.14.2-reviewed-v3"
 		}
 	},
 	"services": [
@@ -468,20 +468,64 @@
 				],
 				"action": "evaluate",
 				"server": "Google-DNS",
-				"tag": "unknown_location",
-				"timeout": "2s",
-				"disable_optimistic_cache": true,
+				"tag": "unknown_primary",
+				"timeout": "1s",
 				"remove_client_subnet": true
 			},
 			{
-				"match_response": "unknown_location",
+				"match_response": "unknown_primary",
+				"response_rcode": "NOERROR",
+				"rule_set": "geoip-cn",
+				"action": "respond"
+			},
+			{
+				"match_response": "unknown_primary",
+				"response_rcode": "NOERROR",
+				"action": "route",
+				"server": "FakeIP-DNS"
+			},
+			{
+				"type": "logical",
+				"mode": "and",
+				"rules": [
+					{
+						"inbound": [
+							"tun-in",
+							"mixed-in"
+						],
+						"query_type": "A"
+					},
+					{
+						"rule_set": "geolocation-!cn",
+						"invert": true
+					}
+				],
+				"action": "evaluate",
+				"server": "Cloudflare-DNS",
+				"tag": "unknown_backup",
+				"timeout": "1s",
+				"remove_client_subnet": true
+			},
+			{
+				"match_response": "unknown_backup",
+				"response_rcode": "NOERROR",
+				"rule_set": "geoip-cn",
+				"action": "respond"
+			},
+			{
+				"match_response": "unknown_backup",
+				"response_rcode": "NOERROR",
+				"action": "route",
+				"server": "FakeIP-DNS"
+			},
+			{
+				"match_response": "unknown_primary",
 				"response_rcode": "NXDOMAIN",
 				"action": "respond"
 			},
 			{
-				"match_response": "unknown_location",
-				"response_rcode": "NOERROR",
-				"rule_set": "geoip-cn",
+				"match_response": "unknown_backup",
+				"response_rcode": "NXDOMAIN",
 				"action": "respond"
 			},
 			{
@@ -538,7 +582,7 @@
 		"reverse_mapping": true,
 		"optimistic": {
 			"enabled": true,
-			"timeout": "5m0s"
+			"timeout": "3d"
 		},
 		"cache_capacity": 16384,
 		"timeout": "10s"
@@ -589,6 +633,11 @@
 				"clash_mode": "global",
 				"action": "route",
 				"outbound": "GLOBAL"
+			},
+			{
+				"rule_set": "jetbrains",
+				"action": "route",
+				"outbound": "📦 Github"
 			},
 			{
 				"rule_set": "category-game-accelerator-cn",
@@ -719,6 +768,11 @@
 			{
 				"protocol": "dns",
 				"action": "hijack-dns"
+			},
+			{
+				"rule_set": "jetbrains",
+				"action": "route",
+				"outbound": "📦 Github"
 			},
 			{
 				"rule_set": "category-game-accelerator-cn",
@@ -926,10 +980,10 @@
 					"alibaba",
 					"tencent",
 					"greatfire",
-					"geolocation-!cn",
 					"private",
 					"googlefcm",
-					"google-play"
+					"google-play",
+					"geolocation-!cn"
 				],
 				"url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/{tag}.srs",
 				"update_interval": "48h0m0s"
@@ -974,7 +1028,7 @@
 						]
 					}
 				]
-			},			
+			},
 			{
 				"type": "inline",
 				"tag": "local-names",
