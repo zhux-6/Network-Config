@@ -1,7 +1,6 @@
 {
   "$schema": "./schema-1.14.2.json",
   "log": {
-    "disabled": false,
     "level": "info",
     "timestamp": true
   },
@@ -24,7 +23,7 @@
       "path": "cache.db",
       "store_fakeip": true,
       "store_dns": true,
-      "cache_id": "sfw-1.14.2-dual-fakeip-v1"
+      "cache_id": "sfw-1.14.2-windows-v2"
     }
   },
   "services": [
@@ -57,11 +56,10 @@
       ],
       "mtu": 1500,
       "stack": "mixed",
-      "dns_mode": "hijack",
-      "strict_route": true,
       "auto_route": true,
-      "udp_timeout": "5m0s",
-      "udp_nat_max": 4096
+      "strict_route": true,
+      "dns_mode": "hijack",
+      "udp_timeout": "5m"
     },
     {
       "type": "mixed",
@@ -102,27 +100,31 @@
         "type": "https",
         "tag": "Ali-DNS",
         "server": "dns.alidns.com",
-        "domain_resolver": "hosts_fix"
+        "domain_resolver": "hosts_fix",
+        "connect_timeout": "5s"
       },
       {
         "type": "https",
         "tag": "Tencent-DNS",
         "server": "doh.pub",
-        "domain_resolver": "hosts_fix"
+        "domain_resolver": "hosts_fix",
+        "connect_timeout": "5s"
       },
       {
         "type": "https",
         "tag": "Cloudflare-DNS",
         "server": "cloudflare-dns.com",
         "detour": "🚀 节点选择",
-        "domain_resolver": "hosts_fix"
+        "domain_resolver": "hosts_fix",
+        "connect_timeout": "5s"
       },
       {
         "type": "https",
         "tag": "Google-DNS",
         "server": "dns.google",
         "detour": "🚀 节点选择",
-        "domain_resolver": "hosts_fix"
+        "domain_resolver": "hosts_fix",
+        "connect_timeout": "5s"
       },
       {
         "tag": "FakeIP-DNS",
@@ -135,7 +137,8 @@
         "tag": "Global-DNS",
         "server": "dns.google",
         "detour": "GLOBAL",
-        "domain_resolver": "hosts_fix"
+        "domain_resolver": "hosts_fix",
+        "connect_timeout": "5s"
       }
     ],
     "final": "Google-DNS",
@@ -146,7 +149,7 @@
       "timeout": "3d"
     },
     "cache_capacity": 16384,
-    "timeout": "10s",
+    "timeout": "5s",
     "rules": [
       {
         "query_type": [
@@ -241,14 +244,52 @@
       },
       {
         "clash_mode": "direct",
-        "action": "route",
+        "action": "evaluate",
         "server": "Ali-DNS",
+        "tag": "direct1",
+        "timeout": "2s",
         "remove_client_subnet": true
+      },
+      {
+        "clash_mode": "direct",
+        "action": "evaluate",
+        "server": "Tencent-DNS",
+        "tag": "direct2",
+        "timeout": "2s",
+        "remove_client_subnet": true
+      },
+      {
+        "match_response": "direct1",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "direct2",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "direct1",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "match_response": "direct2",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "clash_mode": "direct",
+        "action": "predefined",
+        "rcode": "SERVFAIL"
       },
       {
         "clash_mode": "global",
         "action": "route",
         "server": "Global-DNS",
+        "timeout": "5s",
         "remove_client_subnet": true
       },
       {
@@ -258,7 +299,6 @@
           "bilibili-cdn",
           "bilibili-game",
           "douyin",
-          "category-game-accelerator-cn",
           "tencent",
           "alibaba",
           "huya",
@@ -270,14 +310,9 @@
         ],
         "action": "evaluate",
         "server": "Ali-DNS",
-        "tag": "domestic_1",
+        "tag": "domestic1",
         "timeout": "2s",
         "remove_client_subnet": true
-      },
-      {
-        "match_response": "domestic_1",
-        "response_rcode": "NOERROR",
-        "action": "respond"
       },
       {
         "rule_set": [
@@ -286,7 +321,6 @@
           "bilibili-cdn",
           "bilibili-game",
           "douyin",
-          "category-game-accelerator-cn",
           "tencent",
           "alibaba",
           "huya",
@@ -298,22 +332,29 @@
         ],
         "action": "evaluate",
         "server": "Tencent-DNS",
-        "tag": "domestic_2",
+        "tag": "domestic2",
         "timeout": "2s",
         "remove_client_subnet": true
       },
       {
-        "match_response": "domestic_2",
+        "match_response": "domestic1",
         "response_rcode": "NOERROR",
-        "action": "respond"
+        "action": "respond",
+        "race": true
       },
       {
-        "match_response": "domestic_1",
+        "match_response": "domestic2",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "domestic1",
         "response_rcode": "NXDOMAIN",
         "action": "respond"
       },
       {
-        "match_response": "domestic_2",
+        "match_response": "domestic2",
         "response_rcode": "NXDOMAIN",
         "action": "respond"
       },
@@ -324,7 +365,6 @@
           "bilibili-cdn",
           "bilibili-game",
           "douyin",
-          "category-game-accelerator-cn",
           "tencent",
           "alibaba",
           "huya",
@@ -355,9 +395,56 @@
           "steam",
           "epicgames"
         ],
-        "action": "route",
+        "action": "evaluate",
         "server": "Google-DNS",
+        "tag": "game1",
+        "timeout": "2s",
         "remove_client_subnet": true
+      },
+      {
+        "rule_set": [
+          "category-games",
+          "category-games-!cn",
+          "steam",
+          "epicgames"
+        ],
+        "action": "evaluate",
+        "server": "Cloudflare-DNS",
+        "tag": "game2",
+        "timeout": "2s",
+        "remove_client_subnet": true
+      },
+      {
+        "match_response": "game1",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "game2",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "game1",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "match_response": "game2",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "rule_set": [
+          "category-games",
+          "category-games-!cn",
+          "steam",
+          "epicgames"
+        ],
+        "action": "predefined",
+        "rcode": "SERVFAIL"
       },
       {
         "rule_set": [
@@ -366,14 +453,9 @@
         ],
         "action": "evaluate",
         "server": "Ali-DNS",
-        "tag": "china_1",
+        "tag": "china1",
         "timeout": "2s",
         "remove_client_subnet": true
-      },
-      {
-        "match_response": "china_1",
-        "response_rcode": "NOERROR",
-        "action": "respond"
       },
       {
         "rule_set": [
@@ -382,22 +464,29 @@
         ],
         "action": "evaluate",
         "server": "Tencent-DNS",
-        "tag": "china_2",
+        "tag": "china2",
         "timeout": "2s",
         "remove_client_subnet": true
       },
       {
-        "match_response": "china_2",
+        "match_response": "china1",
         "response_rcode": "NOERROR",
-        "action": "respond"
+        "action": "respond",
+        "race": true
       },
       {
-        "match_response": "china_1",
+        "match_response": "china2",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "china1",
         "response_rcode": "NXDOMAIN",
         "action": "respond"
       },
       {
-        "match_response": "china_2",
+        "match_response": "china2",
         "response_rcode": "NXDOMAIN",
         "action": "respond"
       },
@@ -412,34 +501,36 @@
       {
         "action": "evaluate",
         "server": "Google-DNS",
-        "tag": "remote_1",
+        "tag": "remote1",
         "timeout": "2s",
         "remove_client_subnet": true
-      },
-      {
-        "match_response": "remote_1",
-        "response_rcode": "NOERROR",
-        "action": "respond"
       },
       {
         "action": "evaluate",
         "server": "Cloudflare-DNS",
-        "tag": "remote_2",
+        "tag": "remote2",
         "timeout": "2s",
         "remove_client_subnet": true
       },
       {
-        "match_response": "remote_2",
+        "match_response": "remote1",
         "response_rcode": "NOERROR",
-        "action": "respond"
+        "action": "respond",
+        "race": true
       },
       {
-        "match_response": "remote_1",
+        "match_response": "remote2",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "remote1",
         "response_rcode": "NXDOMAIN",
         "action": "respond"
       },
       {
-        "match_response": "remote_2",
+        "match_response": "remote2",
         "response_rcode": "NXDOMAIN",
         "action": "respond"
       },
@@ -450,6 +541,12 @@
     ]
   },
   "route": {
+    "auto_detect_interface": true,
+    "default_domain_resolver": {
+      "server": "Ali-DNS",
+      "timeout": "3s"
+    },
+    "default_http_client": "default",
     "rules": [
       {
         "ip_cidr": "0.0.0.0/8",
@@ -460,12 +557,18 @@
         "action": "hijack-dns"
       },
       {
-        "network": "udp",
-        "action": "route-options",
-        "udp_timeout": "5m"
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "DIRECT"
       },
       {
-        "ip_is_private": true,
+        "ip_cidr": [
+          "169.254.0.0/16",
+          "224.0.0.0/4",
+          "255.255.255.255/32",
+          "fe80::/10",
+          "ff00::/8"
+        ],
         "action": "route",
         "outbound": "DIRECT"
       },
@@ -483,23 +586,11 @@
         "outbound": "LAN-DIRECT"
       },
       {
-        "network": "udp",
-        "port": 443,
-        "action": "reject",
-        "method": "default",
-        "no_drop": true,
-        "domain_suffix": [
-          "bilibili.com",
-          "bilivideo.com",
-          "bilivideo.cn",
-          "hdslb.com",
-          "biliapi.net",
-          "biliapi.com",
-          "youtube.com",
-          "googlevideo.com",
-          "ytimg.com",
-          "youtubei.googleapis.com"
-        ]
+        "clash_mode": "direct",
+        "domain_regex": ".+",
+        "action": "resolve",
+        "strategy": "prefer_ipv4",
+        "timeout": "3s"
       },
       {
         "clash_mode": "direct",
@@ -560,7 +651,27 @@
           "bilibili-cdn",
           "bilibili-game",
           "douyin",
-          "category-game-accelerator-cn",
+          "tencent",
+          "alibaba",
+          "huya",
+          "kurogames",
+          "category-games-cn",
+          "wanmei",
+          "steam@cn",
+          "kaspersky"
+        ],
+        "domain_regex": ".+",
+        "action": "resolve",
+        "strategy": "prefer_ipv4",
+        "timeout": "3s"
+      },
+      {
+        "rule_set": [
+          "direct-domains",
+          "bilibili",
+          "bilibili-cdn",
+          "bilibili-game",
+          "douyin",
           "tencent",
           "alibaba",
           "huya",
@@ -580,43 +691,42 @@
         "outbound": "DIRECT"
       },
       {
-        "action": "route",
         "rule_set": [
           "github",
           "docker",
           "gitlab",
           "jetbrains"
         ],
+        "action": "route",
         "outbound": "📦 Github"
       },
       {
-        "action": "route",
         "rule_set": [
           "openai",
           "anthropic",
           "google-gemini"
         ],
+        "action": "route",
         "outbound": "🤖 AI"
       },
       {
-        "action": "route",
         "rule_set": [
           "telegram",
           "twitter",
           "facebook",
           "instagram"
         ],
+        "action": "route",
         "outbound": "✈️ Telegram"
       },
       {
-        "action": "route",
         "rule_set": [
           "tiktok"
         ],
+        "action": "route",
         "outbound": "🎬 TikTok"
       },
       {
-        "action": "route",
         "rule_set": [
           "disney",
           "netflix",
@@ -626,32 +736,33 @@
           "discord",
           "bangumi"
         ],
+        "action": "route",
         "outbound": "🎬 流媒体"
       },
       {
-        "action": "route",
         "rule_set": [
           "google",
           "googlefcm",
           "google-play"
         ],
+        "action": "route",
         "outbound": "🌐 Google"
       },
       {
-        "action": "route",
         "rule_set": [
           "bing",
           "bing@cn",
           "microsoft"
         ],
+        "action": "route",
         "outbound": "🪟 微软"
       },
       {
-        "action": "route",
         "rule_set": [
           "apple",
           "icloud"
         ],
+        "action": "route",
         "outbound": "🚀 节点选择"
       },
       {
@@ -677,16 +788,24 @@
           "geolocation-cn",
           "cn"
         ],
+        "domain_regex": ".+",
+        "action": "resolve",
+        "strategy": "prefer_ipv4",
+        "timeout": "3s"
+      },
+      {
+        "rule_set": [
+          "geolocation-cn",
+          "cn"
+        ],
         "action": "route",
         "outbound": "DIRECT"
       },
       {
-        "domain_regex": [
-          ".+"
-        ],
+        "domain_regex": ".+",
         "action": "resolve",
-        "timeout": "5s",
-        "strategy": "ipv4_only"
+        "strategy": "ipv4_only",
+        "timeout": "3s"
       },
       {
         "ip_is_private": true,
@@ -839,17 +958,14 @@
         ]
       }
     ],
-    "auto_detect_interface": true,
-    "final": "🐟 漏网之鱼",
-    "default_domain_resolver": "Ali-DNS",
-    "default_http_client": "default"
+    "final": "🐟 漏网之鱼"
   },
   "outbounds": [
     {
       "type": "selector",
       "tag": "🚀 节点选择",
       "interrupt_exist_connections": true,
-      "default": "☁️ GCP出口",
+      "default": "🌐 入口选择",
       "outbounds": [
         "🌐 入口选择",
         "☁️ GCP出口",
@@ -986,7 +1102,10 @@
     {
       "type": "direct",
       "tag": "DIRECT",
-      "domain_resolver": "Ali-DNS"
+      "domain_resolver": {
+        "server": "Ali-DNS",
+        "timeout": "3s"
+      }
     },
     {
       "type": "selector",
@@ -1123,7 +1242,8 @@
       "tag": "LAN-DIRECT",
       "domain_resolver": {
         "server": "Local-DNS",
-        "disable_optimistic_cache": true
+        "disable_optimistic_cache": true,
+        "timeout": "3s"
       }
     }
   ],
