@@ -692,98 +692,6 @@
         "outbound": "LAN-DIRECT"
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "inbound": "tun-in",
-            "preferred_by": "bridge-out",
-            "rule_set": [
-              "direct-domains",
-              "bilibili",
-              "bilibili-cdn",
-              "bilibili-game",
-              "douyin",
-              "category-game-accelerator-cn",
-              "tencent",
-              "alibaba",
-              "huya",
-              "kurogames",
-              "category-games-cn",
-              "wanmei",
-              "steam@cn",
-              "kaspersky"
-            ]
-          },
-          {
-            "ip_cidr": "198.18.0.0/15",
-            "invert": true
-          }
-        ],
-        "action": "route",
-        "outbound": "🏠 国内直连"
-      },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "inbound": "tun-in",
-            "preferred_by": "bridge-out",
-            "rule_set": [
-              "cn",
-              "geolocation-cn"
-            ]
-          },
-          {
-            "rule_set": [
-              "github",
-              "docker",
-              "gitlab",
-              "jetbrains",
-              "openai",
-              "anthropic",
-              "google-gemini",
-              "telegram",
-              "twitter",
-              "facebook",
-              "instagram",
-              "tiktok",
-              "disney",
-              "netflix",
-              "youtube",
-              "twitch",
-              "spotify",
-              "discord",
-              "bangumi",
-              "google",
-              "googlefcm",
-              "google-play",
-              "bing",
-              "bing@cn",
-              "microsoft",
-              "apple",
-              "icloud",
-              "greatfire",
-              "paypal",
-              "category-games",
-              "category-games-!cn",
-              "steam",
-              "epicgames",
-              "geoip-google",
-              "geoip-telegram"
-            ],
-            "invert": true
-          },
-          {
-            "ip_cidr": "198.18.0.0/15",
-            "invert": true
-          }
-        ],
-        "action": "route",
-        "outbound": "🏠 国内直连"
-      },
-      {
         "action": "route",
         "outbound": "DIRECT",
         "rule_set": [
@@ -1380,17 +1288,12 @@
       "interrupt_exist_connections": false
     },
     {
-      "type": "bridge",
-      "tag": "bridge-out"
-    },
-    {
       "type": "selector",
       "tag": "🏠 国内直连",
       "outbounds": [
-        "bridge-out",
         "DIRECT"
       ],
-      "default": "bridge-out",
+      "default": "DIRECT",
       "interrupt_exist_connections": true
     },
     {
