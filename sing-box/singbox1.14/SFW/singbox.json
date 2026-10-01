@@ -23,7 +23,7 @@
       "path": "cache.db",
       "store_fakeip": true,
       "store_dns": true,
-      "cache_id": "sfw-1.14.2-windows-v2"
+      "cache_id": "sfw-1.14.2-windows-ipv4-v1"
     }
   },
   "services": [
@@ -51,8 +51,7 @@
       "tag": "tun-in",
       "interface_name": "singbox",
       "address": [
-        "172.18.0.1/30",
-        "fdfe:dcba:9876::1/126"
+        "172.18.0.1/30"
       ],
       "mtu": 1500,
       "stack": "mixed",
@@ -129,8 +128,7 @@
       {
         "tag": "FakeIP-DNS",
         "type": "fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "2001:2::/48"
+        "inet4_range": "198.18.0.0/15"
       },
       {
         "type": "https",
@@ -142,7 +140,7 @@
       }
     ],
     "final": "Google-DNS",
-    "strategy": "prefer_ipv4",
+    "strategy": "ipv4_only",
     "reverse_mapping": false,
     "optimistic": {
       "enabled": true,
@@ -151,6 +149,11 @@
     "cache_capacity": 16384,
     "timeout": "5s",
     "rules": [
+      {
+        "query_type": "AAAA",
+        "action": "predefined",
+        "rcode": "NOERROR"
+      },
       {
         "query_type": [
           "HTTPS",
@@ -189,6 +192,12 @@
         "disable_cache": true
       },
       {
+        "rule_set": "time-services",
+        "action": "route",
+        "server": "Local-DNS",
+        "disable_optimistic_cache": true
+      },
+      {
         "rule_set": "category-game-accelerator-cn",
         "action": "route",
         "server": "Local-DNS",
@@ -203,10 +212,7 @@
               "tun-in",
               "mixed-in"
             ],
-            "query_type": [
-              "A",
-              "AAAA"
-            ]
+            "query_type": "A"
           },
           {
             "type": "logical",
@@ -376,17 +382,6 @@
         ],
         "action": "predefined",
         "rcode": "SERVFAIL"
-      },
-      {
-        "rule_set": [
-          "category-games",
-          "category-games-!cn",
-          "steam",
-          "epicgames"
-        ],
-        "query_type": "AAAA",
-        "action": "predefined",
-        "rcode": "NOERROR"
       },
       {
         "rule_set": [
@@ -589,7 +584,7 @@
         "clash_mode": "direct",
         "domain_regex": ".+",
         "action": "resolve",
-        "strategy": "prefer_ipv4",
+        "strategy": "ipv4_only",
         "timeout": "3s"
       },
       {
@@ -619,8 +614,7 @@
               },
               {
                 "ip_cidr": [
-                  "198.18.0.0/15",
-                  "2001:2::/48"
+                  "198.18.0.0/15"
                 ],
                 "invert": true
               }
@@ -645,24 +639,32 @@
         "outbound": "LAN-DIRECT"
       },
       {
-        "rule_set": [
-          "direct-domains",
-          "bilibili",
-          "bilibili-cdn",
-          "bilibili-game",
-          "douyin",
-          "tencent",
-          "alibaba",
-          "huya",
-          "kurogames",
-          "category-games-cn",
-          "wanmei",
-          "steam@cn",
-          "kaspersky"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": [
+              "direct-domains",
+              "bilibili",
+              "bilibili-cdn",
+              "bilibili-game",
+              "douyin",
+              "tencent",
+              "alibaba",
+              "huya",
+              "kurogames",
+              "category-games-cn",
+              "wanmei",
+              "steam@cn",
+              "kaspersky"
+            ]
+          },
+          {
+            "domain_regex": ".+"
+          }
         ],
-        "domain_regex": ".+",
         "action": "resolve",
-        "strategy": "prefer_ipv4",
+        "strategy": "ipv4_only",
         "timeout": "3s"
       },
       {
@@ -784,13 +786,21 @@
         "outbound": "🚀 节点选择"
       },
       {
-        "rule_set": [
-          "geolocation-cn",
-          "cn"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": [
+              "geolocation-cn",
+              "cn"
+            ]
+          },
+          {
+            "domain_regex": ".+"
+          }
         ],
-        "domain_regex": ".+",
         "action": "resolve",
-        "strategy": "prefer_ipv4",
+        "strategy": "ipv4_only",
         "timeout": "3s"
       },
       {
@@ -953,6 +963,24 @@
               "ipv6.msftconnecttest.com",
               "dns.msftncsi.com",
               "www.msftncsi.com"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "inline",
+        "tag": "time-services",
+        "rules": [
+          {
+            "domain": [
+              "time.windows.com",
+              "time.apple.com",
+              "time.cloudflare.com",
+              "ntp.aliyun.com",
+              "ntp.tencent.com"
+            ],
+            "domain_suffix": [
+              "ntp.org"
             ]
           }
         ]
@@ -1227,15 +1255,6 @@
       "interval": "5m",
       "tolerance": 50,
       "interrupt_exist_connections": false
-    },
-    {
-      "type": "selector",
-      "tag": "🏠 国内直连",
-      "outbounds": [
-        "DIRECT"
-      ],
-      "default": "DIRECT",
-      "interrupt_exist_connections": true
     },
     {
       "type": "direct",
