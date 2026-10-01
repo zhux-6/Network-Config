@@ -148,16 +148,6 @@
     "timeout": "10s",
     "rules": [
       {
-        "query_type": "AAAA",
-        "rule_set": [
-          "bilibili",
-          "bilibili-cdn",
-          "bilibili-game"
-        ],
-        "action": "predefined",
-        "rcode": "NOERROR"
-      },
-      {
         "query_type": [
           "HTTPS",
           "SVCB"
