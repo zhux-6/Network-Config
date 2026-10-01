@@ -24,7 +24,7 @@
       "path": "cache.db",
       "store_fakeip": true,
       "store_dns": true,
-      "cache_id": "sfw-1.14.2-rebuilt-direct"
+      "cache_id": "sfw-1.14.2-rebuilt-bridge"
     }
   },
   "services": [
@@ -544,6 +544,105 @@
         "clash_mode": "global",
         "action": "route",
         "outbound": "GLOBAL"
+      },
+      {
+        "rule_set": "jetbrains",
+        "action": "route",
+        "outbound": "📦 Github"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": "tun-in",
+            "preferred_by": "bridge-out",
+            "rule_set": [
+              "direct-domains",
+              "bilibili",
+              "bilibili-cdn",
+              "bilibili-game",
+              "douyin",
+              "category-game-accelerator-cn",
+              "tencent",
+              "alibaba",
+              "huya",
+              "kurogames",
+              "category-games-cn",
+              "wanmei",
+              "steam@cn",
+              "kaspersky"
+            ],
+            "ip_version": 4
+          },
+          {
+            "ip_cidr": "198.18.0.0/15",
+            "invert": true
+          }
+        ],
+        "action": "route",
+        "outbound": "🏠 国内直连"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": "tun-in",
+            "preferred_by": "bridge-out",
+            "rule_set": [
+              "cn",
+              "geolocation-cn"
+            ],
+            "ip_version": 4
+          },
+          {
+            "rule_set": [
+              "github",
+              "docker",
+              "gitlab",
+              "jetbrains",
+              "openai",
+              "anthropic",
+              "google-gemini",
+              "telegram",
+              "twitter",
+              "facebook",
+              "instagram",
+              "tiktok",
+              "disney",
+              "netflix",
+              "youtube",
+              "twitch",
+              "spotify",
+              "discord",
+              "bangumi",
+              "google",
+              "googlefcm",
+              "google-play",
+              "bing",
+              "bing@cn",
+              "microsoft",
+              "apple",
+              "icloud",
+              "greatfire",
+              "paypal",
+              "category-games",
+              "category-games-!cn",
+              "steam",
+              "epicgames",
+              "geoip-google",
+              "geoip-telegram"
+            ],
+            "invert": true
+          },
+          {
+            "ip_cidr": "198.18.0.0/15",
+            "invert": true
+          }
+        ],
+        "action": "route",
+        "outbound": "🏠 国内直连"
       },
       {
         "domain_regex": ".+",
@@ -1125,9 +1224,10 @@
       "type": "selector",
       "tag": "🏠 国内直连",
       "outbounds": [
+        "bridge-out",
         "DIRECT"
       ],
-      "default": "DIRECT",
+      "default": "bridge-out",
       "interrupt_exist_connections": true
     },
     {
@@ -1137,6 +1237,10 @@
         "server": "Local-DNS",
         "disable_optimistic_cache": true
       }
+    },
+    {
+      "type": "bridge",
+      "tag": "bridge-out"
     }
   ],
   "endpoints": []

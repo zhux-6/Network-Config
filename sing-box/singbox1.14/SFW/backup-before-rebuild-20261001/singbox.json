@@ -24,7 +24,7 @@
       "path": "cache.db",
       "store_fakeip": true,
       "store_dns": true,
-      "cache_id": "sfw-1.14.2-rebuilt-direct"
+      "cache_id": "sfw-1.14.2-direct-dualstack"
     }
   },
   "services": [
@@ -137,15 +137,6 @@
         "domain_resolver": "hosts_fix"
       }
     ],
-    "final": "Google-DNS",
-    "strategy": "prefer_ipv4",
-    "reverse_mapping": true,
-    "optimistic": {
-      "enabled": true,
-      "timeout": "3d"
-    },
-    "cache_capacity": 16384,
-    "timeout": "10s",
     "rules": [
       {
         "query_type": [
@@ -165,13 +156,13 @@
         "mode": "or",
         "rules": [
           {
-            "rule_set": [
-              "private",
-              "local-names"
-            ]
+            "rule_set": "private"
           },
           {
             "preferred_by": "Local-DNS"
+          },
+          {
+            "rule_set": "local-names"
           }
         ],
         "action": "route",
@@ -231,34 +222,10 @@
         "disable_optimistic_cache": true
       },
       {
-        "rule_set": [
-          "direct-domains",
-          "bilibili",
-          "bilibili-cdn",
-          "bilibili-game",
-          "douyin",
-          "category-game-accelerator-cn",
-          "tencent",
-          "alibaba",
-          "huya",
-          "kurogames",
-          "category-games-cn",
-          "wanmei",
-          "steam@cn",
-          "kaspersky"
-        ],
         "action": "evaluate",
         "server": "Ali-DNS",
-        "tag": "domestic_1",
-        "timeout": "2s",
-        "remove_client_subnet": true
-      },
-      {
-        "match_response": "domestic_1",
-        "response_rcode": "NOERROR",
-        "action": "respond"
-      },
-      {
+        "tag": "direct_1",
+        "remove_client_subnet": true,
         "rule_set": [
           "direct-domains",
           "bilibili",
@@ -274,29 +241,20 @@
           "wanmei",
           "steam@cn",
           "kaspersky"
-        ],
+        ]
+      },
+      {
+        "match_response": "direct_1",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
         "action": "evaluate",
         "server": "Tencent-DNS",
-        "tag": "domestic_2",
-        "timeout": "2s",
-        "remove_client_subnet": true
-      },
-      {
-        "match_response": "domestic_2",
-        "response_rcode": "NOERROR",
-        "action": "respond"
-      },
-      {
-        "match_response": "domestic_1",
-        "response_rcode": "NXDOMAIN",
-        "action": "respond"
-      },
-      {
-        "match_response": "domestic_2",
-        "response_rcode": "NXDOMAIN",
-        "action": "respond"
-      },
-      {
+        "tag": "direct_2",
+        "speculative": true,
+        "remove_client_subnet": true,
         "rule_set": [
           "direct-domains",
           "bilibili",
@@ -312,9 +270,43 @@
           "wanmei",
           "steam@cn",
           "kaspersky"
-        ],
+        ]
+      },
+      {
+        "match_response": "direct_2",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "direct_1",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "match_response": "direct_2",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
         "action": "predefined",
-        "rcode": "SERVFAIL"
+        "rcode": "SERVFAIL",
+        "rule_set": [
+          "direct-domains",
+          "bilibili",
+          "bilibili-cdn",
+          "bilibili-game",
+          "douyin",
+          "category-game-accelerator-cn",
+          "tencent",
+          "alibaba",
+          "huya",
+          "kurogames",
+          "category-games-cn",
+          "wanmei",
+          "steam@cn",
+          "kaspersky"
+        ]
       },
       {
         "query_type": "AAAA",
@@ -363,9 +355,55 @@
           "steam",
           "epicgames"
         ],
-        "action": "route",
+        "action": "evaluate",
         "server": "Google-DNS",
+        "tag": "games_1",
         "remove_client_subnet": true
+      },
+      {
+        "match_response": "games_1",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "rule_set": [
+          "category-games",
+          "category-games-!cn",
+          "steam",
+          "epicgames"
+        ],
+        "action": "evaluate",
+        "server": "Cloudflare-DNS",
+        "tag": "games_2",
+        "speculative": true,
+        "remove_client_subnet": true
+      },
+      {
+        "match_response": "games_2",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "games_1",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "match_response": "games_2",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "rule_set": [
+          "category-games",
+          "category-games-!cn",
+          "steam",
+          "epicgames"
+        ],
+        "action": "predefined",
+        "rcode": "SERVFAIL"
       },
       {
         "rule_set": [
@@ -409,50 +447,51 @@
       },
       {
         "rule_set": [
-          "cn",
-          "geolocation-cn"
+          "geolocation-cn",
+          "cn"
         ],
         "action": "evaluate",
         "server": "Ali-DNS",
-        "tag": "china_1",
-        "timeout": "2s",
+        "tag": "cn_1",
         "remove_client_subnet": true
       },
       {
-        "match_response": "china_1",
+        "match_response": "cn_1",
         "response_rcode": "NOERROR",
-        "action": "respond"
+        "action": "respond",
+        "race": true
       },
       {
         "rule_set": [
-          "cn",
-          "geolocation-cn"
+          "geolocation-cn",
+          "cn"
         ],
         "action": "evaluate",
         "server": "Tencent-DNS",
-        "tag": "china_2",
-        "timeout": "2s",
+        "tag": "cn_2",
+        "speculative": true,
         "remove_client_subnet": true
       },
       {
-        "match_response": "china_2",
+        "match_response": "cn_2",
         "response_rcode": "NOERROR",
-        "action": "respond"
+        "action": "respond",
+        "race": true
       },
       {
-        "match_response": "china_1",
+        "match_response": "cn_1",
         "response_rcode": "NXDOMAIN",
         "action": "respond"
       },
       {
-        "match_response": "china_2",
+        "match_response": "cn_2",
         "response_rcode": "NXDOMAIN",
         "action": "respond"
       },
       {
         "rule_set": [
-          "cn",
-          "geolocation-cn"
+          "geolocation-cn",
+          "cn"
         ],
         "action": "predefined",
         "rcode": "SERVFAIL"
@@ -463,28 +502,116 @@
         "rcode": "NOERROR"
       },
       {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": [
+              "tun-in",
+              "mixed-in"
+            ],
+            "query_type": "A"
+          },
+          {
+            "rule_set": "geolocation-!cn",
+            "invert": true
+          }
+        ],
+        "action": "evaluate",
+        "server": "Google-DNS",
+        "tag": "unknown_primary",
+        "timeout": "1s",
+        "remove_client_subnet": true
+      },
+      {
+        "match_response": "unknown_primary",
+        "response_rcode": "NOERROR",
+        "rule_set": "geoip-cn",
+        "action": "respond"
+      },
+      {
+        "match_response": "unknown_primary",
+        "response_rcode": "NOERROR",
+        "action": "route",
+        "server": "FakeIP-DNS"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": [
+              "tun-in",
+              "mixed-in"
+            ],
+            "query_type": "A"
+          },
+          {
+            "rule_set": "geolocation-!cn",
+            "invert": true
+          }
+        ],
+        "action": "evaluate",
+        "server": "Cloudflare-DNS",
+        "tag": "unknown_backup",
+        "timeout": "1s",
+        "remove_client_subnet": true
+      },
+      {
+        "match_response": "unknown_backup",
+        "response_rcode": "NOERROR",
+        "rule_set": "geoip-cn",
+        "action": "respond"
+      },
+      {
+        "match_response": "unknown_backup",
+        "response_rcode": "NOERROR",
+        "action": "route",
+        "server": "FakeIP-DNS"
+      },
+      {
+        "match_response": "unknown_primary",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "match_response": "unknown_backup",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "inbound": [
+          "tun-in",
+          "mixed-in"
+        ],
+        "query_type": "A",
+        "action": "route",
+        "server": "FakeIP-DNS"
+      },
+      {
         "action": "evaluate",
         "server": "Google-DNS",
         "tag": "remote_1",
-        "timeout": "2s",
         "remove_client_subnet": true
       },
       {
         "match_response": "remote_1",
         "response_rcode": "NOERROR",
-        "action": "respond"
+        "action": "respond",
+        "race": true
       },
       {
         "action": "evaluate",
         "server": "Cloudflare-DNS",
         "tag": "remote_2",
-        "timeout": "2s",
+        "speculative": true,
         "remove_client_subnet": true
       },
       {
         "match_response": "remote_2",
         "response_rcode": "NOERROR",
-        "action": "respond"
+        "action": "respond",
+        "race": true
       },
       {
         "match_response": "remote_1",
@@ -500,7 +627,16 @@
         "action": "predefined",
         "rcode": "SERVFAIL"
       }
-    ]
+    ],
+    "final": "Google-DNS",
+    "strategy": "prefer_ipv4",
+    "reverse_mapping": true,
+    "optimistic": {
+      "enabled": true,
+      "timeout": "3d"
+    },
+    "cache_capacity": 16384,
+    "timeout": "10s"
   },
   "route": {
     "rules": [
@@ -546,8 +682,136 @@
         "outbound": "GLOBAL"
       },
       {
-        "domain_regex": ".+",
-        "invert": true,
+        "rule_set": "jetbrains",
+        "action": "route",
+        "outbound": "📦 Github"
+      },
+      {
+        "rule_set": "category-game-accelerator-cn",
+        "action": "route",
+        "outbound": "LAN-DIRECT"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": "tun-in",
+            "preferred_by": "bridge-out",
+            "rule_set": [
+              "direct-domains",
+              "bilibili",
+              "bilibili-cdn",
+              "bilibili-game",
+              "douyin",
+              "category-game-accelerator-cn",
+              "tencent",
+              "alibaba",
+              "huya",
+              "kurogames",
+              "category-games-cn",
+              "wanmei",
+              "steam@cn",
+              "kaspersky"
+            ],
+            "ip_version": 4
+          },
+          {
+            "ip_cidr": "198.18.0.0/15",
+            "invert": true
+          }
+        ],
+        "action": "route",
+        "outbound": "🏠 国内直连"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": "tun-in",
+            "preferred_by": "bridge-out",
+            "rule_set": [
+              "cn",
+              "geolocation-cn"
+            ],
+            "ip_version": 4
+          },
+          {
+            "rule_set": [
+              "github",
+              "docker",
+              "gitlab",
+              "jetbrains",
+              "openai",
+              "anthropic",
+              "google-gemini",
+              "telegram",
+              "twitter",
+              "facebook",
+              "instagram",
+              "tiktok",
+              "disney",
+              "netflix",
+              "youtube",
+              "twitch",
+              "spotify",
+              "discord",
+              "bangumi",
+              "google",
+              "googlefcm",
+              "google-play",
+              "bing",
+              "bing@cn",
+              "microsoft",
+              "apple",
+              "icloud",
+              "greatfire",
+              "paypal",
+              "category-games",
+              "category-games-!cn",
+              "steam",
+              "epicgames",
+              "geoip-google",
+              "geoip-telegram"
+            ],
+            "invert": true
+          },
+          {
+            "ip_cidr": "198.18.0.0/15",
+            "invert": true
+          }
+        ],
+        "action": "route",
+        "outbound": "🏠 国内直连"
+      },
+      {
+        "action": "route",
+        "outbound": "DIRECT",
+        "rule_set": [
+          "direct-domains",
+          "bilibili",
+          "bilibili-cdn",
+          "bilibili-game",
+          "douyin",
+          "category-game-accelerator-cn",
+          "tencent",
+          "alibaba",
+          "huya",
+          "kurogames",
+          "category-games-cn",
+          "wanmei",
+          "steam@cn",
+          "kaspersky"
+        ]
+      },
+      {
+        "network": "udp",
+        "port": 123,
+        "action": "route",
+        "outbound": "DIRECT"
+      },
+      {
         "action": "sniff"
       },
       {
@@ -565,6 +829,8 @@
         "outbound": "LAN-DIRECT"
       },
       {
+        "action": "route",
+        "outbound": "DIRECT",
         "rule_set": [
           "direct-domains",
           "bilibili",
@@ -580,15 +846,7 @@
           "wanmei",
           "steam@cn",
           "kaspersky"
-        ],
-        "action": "route",
-        "outbound": "DIRECT"
-      },
-      {
-        "network": "udp",
-        "port": 123,
-        "action": "route",
-        "outbound": "DIRECT"
+        ]
       },
       {
         "action": "route",
@@ -697,7 +955,8 @@
           ".+"
         ],
         "action": "resolve",
-        "timeout": "5s",
+        "server": "Google-DNS",
+        "timeout": "3s",
         "strategy": "ipv4_only"
       },
       {
@@ -773,7 +1032,8 @@
           "greatfire",
           "private",
           "googlefcm",
-          "google-play"
+          "google-play",
+          "geolocation-!cn"
         ],
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/{tag}.srs",
         "update_interval": "48h0m0s"
@@ -1125,9 +1385,10 @@
       "type": "selector",
       "tag": "🏠 国内直连",
       "outbounds": [
+        "bridge-out",
         "DIRECT"
       ],
-      "default": "DIRECT",
+      "default": "bridge-out",
       "interrupt_exist_connections": true
     },
     {
@@ -1137,6 +1398,10 @@
         "server": "Local-DNS",
         "disable_optimistic_cache": true
       }
+    },
+    {
+      "type": "bridge",
+      "tag": "bridge-out"
     }
   ],
   "endpoints": []
