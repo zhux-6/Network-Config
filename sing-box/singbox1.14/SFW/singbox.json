@@ -24,7 +24,7 @@
       "path": "cache.db",
       "store_fakeip": true,
       "store_dns": true,
-      "cache_id": "sfw-1.14.2-rebuilt-direct"
+      "cache_id": "sfw-1.14.2-dual-fakeip-v1"
     }
   },
   "services": [
@@ -127,7 +127,8 @@
       {
         "tag": "FakeIP-DNS",
         "type": "fakeip",
-        "inet4_range": "198.18.0.0/15"
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "2001:2::/48"
       },
       {
         "type": "https",
@@ -139,7 +140,7 @@
     ],
     "final": "Google-DNS",
     "strategy": "prefer_ipv4",
-    "reverse_mapping": true,
+    "reverse_mapping": false,
     "optimistic": {
       "enabled": true,
       "timeout": "3d"
@@ -147,16 +148,6 @@
     "cache_capacity": 16384,
     "timeout": "10s",
     "rules": [
-      {
-        "query_type": "AAAA",
-        "rule_set": [
-          "bilibili",
-          "bilibili-cdn",
-          "bilibili-game"
-        ],
-        "action": "predefined",
-        "rcode": "NOERROR"
-      },
       {
         "query_type": [
           "HTTPS",
@@ -195,6 +186,60 @@
         "disable_cache": true
       },
       {
+        "rule_set": "category-game-accelerator-cn",
+        "action": "route",
+        "server": "Local-DNS",
+        "disable_optimistic_cache": true
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "inbound": [
+              "tun-in",
+              "mixed-in"
+            ],
+            "query_type": [
+              "A",
+              "AAAA"
+            ]
+          },
+          {
+            "type": "logical",
+            "mode": "or",
+            "rules": [
+              {
+                "rule_set": [
+                  "category-games",
+                  "category-games-!cn",
+                  "steam",
+                  "epicgames",
+                  "category-games-cn",
+                  "steam@cn",
+                  "wanmei",
+                  "kurogames",
+                  "kaspersky"
+                ]
+              },
+              {
+                "domain_suffix": [
+                  "steamcontent.com",
+                  "steamserver.net",
+                  "srv.nintendo.net",
+                  "stun.playstation.net",
+                  "xboxlive.com",
+                  "ntp.org"
+                ]
+              }
+            ],
+            "invert": true
+          }
+        ],
+        "action": "route",
+        "server": "FakeIP-DNS"
+      },
+      {
         "clash_mode": "direct",
         "action": "route",
         "server": "Ali-DNS",
@@ -202,43 +247,9 @@
       },
       {
         "clash_mode": "global",
-        "query_type": "AAAA",
-        "action": "predefined",
-        "rcode": "NOERROR"
-      },
-      {
-        "clash_mode": "global",
-        "rule_set": [
-          "category-games",
-          "category-games-!cn",
-          "steam",
-          "epicgames"
-        ],
         "action": "route",
         "server": "Global-DNS",
         "remove_client_subnet": true
-      },
-      {
-        "clash_mode": "global",
-        "inbound": [
-          "tun-in",
-          "mixed-in"
-        ],
-        "query_type": "A",
-        "action": "route",
-        "server": "FakeIP-DNS"
-      },
-      {
-        "clash_mode": "global",
-        "action": "route",
-        "server": "Global-DNS",
-        "remove_client_subnet": true
-      },
-      {
-        "rule_set": "category-game-accelerator-cn",
-        "action": "route",
-        "server": "Local-DNS",
-        "disable_optimistic_cache": true
       },
       {
         "rule_set": [
@@ -327,42 +338,13 @@
         "rcode": "SERVFAIL"
       },
       {
-        "query_type": "AAAA",
         "rule_set": [
           "category-games",
           "category-games-!cn",
           "steam",
-          "epicgames",
-          "github",
-          "docker",
-          "gitlab",
-          "jetbrains",
-          "openai",
-          "anthropic",
-          "google-gemini",
-          "telegram",
-          "twitter",
-          "facebook",
-          "instagram",
-          "tiktok",
-          "disney",
-          "netflix",
-          "youtube",
-          "twitch",
-          "spotify",
-          "discord",
-          "bangumi",
-          "google",
-          "googlefcm",
-          "google-play",
-          "bing",
-          "bing@cn",
-          "microsoft",
-          "apple",
-          "icloud",
-          "greatfire",
-          "paypal"
+          "epicgames"
         ],
+        "query_type": "AAAA",
         "action": "predefined",
         "rcode": "NOERROR"
       },
@@ -376,46 +358,6 @@
         "action": "route",
         "server": "Google-DNS",
         "remove_client_subnet": true
-      },
-      {
-        "rule_set": [
-          "github",
-          "docker",
-          "gitlab",
-          "jetbrains",
-          "openai",
-          "anthropic",
-          "google-gemini",
-          "telegram",
-          "twitter",
-          "facebook",
-          "instagram",
-          "tiktok",
-          "disney",
-          "netflix",
-          "youtube",
-          "twitch",
-          "spotify",
-          "discord",
-          "bangumi",
-          "google",
-          "googlefcm",
-          "google-play",
-          "bing",
-          "bing@cn",
-          "microsoft",
-          "apple",
-          "icloud",
-          "greatfire",
-          "paypal"
-        ],
-        "inbound": [
-          "tun-in",
-          "mixed-in"
-        ],
-        "query_type": "A",
-        "action": "route",
-        "server": "FakeIP-DNS"
       },
       {
         "rule_set": [
@@ -466,11 +408,6 @@
         ],
         "action": "predefined",
         "rcode": "SERVFAIL"
-      },
-      {
-        "query_type": "AAAA",
-        "action": "predefined",
-        "rcode": "NOERROR"
       },
       {
         "action": "evaluate",
@@ -546,6 +483,25 @@
         "outbound": "LAN-DIRECT"
       },
       {
+        "network": "udp",
+        "port": 443,
+        "action": "reject",
+        "method": "default",
+        "no_drop": true,
+        "domain_suffix": [
+          "bilibili.com",
+          "bilivideo.com",
+          "bilivideo.cn",
+          "hdslb.com",
+          "biliapi.net",
+          "biliapi.com",
+          "youtube.com",
+          "googlevideo.com",
+          "ytimg.com",
+          "youtubei.googleapis.com"
+        ]
+      },
+      {
         "clash_mode": "direct",
         "action": "route",
         "outbound": "DIRECT"
@@ -556,9 +512,32 @@
         "outbound": "GLOBAL"
       },
       {
-        "domain_regex": ".+",
-        "invert": true,
-        "action": "sniff"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "domain_regex": ".+",
+            "invert": true
+          },
+          {
+            "type": "logical",
+            "mode": "and",
+            "rules": [
+              {
+                "inbound": "tun-in"
+              },
+              {
+                "ip_cidr": [
+                  "198.18.0.0/15",
+                  "2001:2::/48"
+                ],
+                "invert": true
+              }
+            ]
+          }
+        ],
+        "action": "sniff",
+        "timeout": "300ms"
       },
       {
         "protocol": "dns",
@@ -702,7 +681,6 @@
         "outbound": "DIRECT"
       },
       {
-        "inbound": "mixed-in",
         "domain_regex": [
           ".+"
         ],
