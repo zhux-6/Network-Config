@@ -23,7 +23,7 @@
       "path": "cache.db",
       "store_fakeip": true,
       "store_dns": true,
-      "cache_id": "sfw-1.14.2-android-hybrid-v2"
+      "cache_id": "sfw-1.14.2-auto-entry-game-proxy-v3"
     }
   },
   "services": [
@@ -132,6 +132,20 @@
         "tag": "Global-DNS",
         "server": "dns.google",
         "detour": "GLOBAL",
+        "domain_resolver": "hosts_fix"
+      },
+      {
+        "type": "https",
+        "tag": "Game-Google-DNS",
+        "server": "dns.google",
+        "detour": "🎮 游戏",
+        "domain_resolver": "hosts_fix"
+      },
+      {
+        "type": "https",
+        "tag": "Game-Cloudflare-DNS",
+        "server": "cloudflare-dns.com",
+        "detour": "🎮 游戏",
         "domain_resolver": "hosts_fix"
       }
     ],
@@ -344,14 +358,89 @@
       },
       {
         "rule_set": [
-          "category-games",
-          "category-games-!cn",
-          "steam",
-          "epicgames",
           "googlefcm"
         ],
         "action": "evaluate",
         "server": "Google-DNS",
+        "tag": "fcm_1",
+        "remove_client_subnet": true
+      },
+      {
+        "query_type": "A",
+        "match_response": "fcm_1",
+        "response_rcode": "NOERROR",
+        "ip_accept_any": true,
+        "action": "respond",
+        "race": true
+      },
+      {
+        "rule_set": "dns-non-a",
+        "match_response": "fcm_1",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "rule_set": [
+          "googlefcm"
+        ],
+        "action": "evaluate",
+        "server": "Cloudflare-DNS",
+        "tag": "fcm_2",
+        "speculative": true,
+        "remove_client_subnet": true
+      },
+      {
+        "query_type": "A",
+        "match_response": "fcm_2",
+        "response_rcode": "NOERROR",
+        "ip_accept_any": true,
+        "action": "respond",
+        "race": true
+      },
+      {
+        "rule_set": "dns-non-a",
+        "match_response": "fcm_2",
+        "response_rcode": "NOERROR",
+        "action": "respond",
+        "race": true
+      },
+      {
+        "match_response": "fcm_1",
+        "response_rcode": "NOERROR",
+        "action": "respond"
+      },
+      {
+        "match_response": "fcm_2",
+        "response_rcode": "NOERROR",
+        "action": "respond"
+      },
+      {
+        "match_response": "fcm_1",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "match_response": "fcm_2",
+        "response_rcode": "NXDOMAIN",
+        "action": "respond"
+      },
+      {
+        "rule_set": [
+          "googlefcm"
+        ],
+        "action": "predefined",
+        "rcode": "SERVFAIL"
+      },
+      {
+        "rule_set": [
+          "category-games",
+          "category-games-!cn",
+          "steam",
+          "epicgames"
+        ],
+        "action": "evaluate",
+        "server": "Game-Google-DNS",
         "tag": "games_1",
         "remove_client_subnet": true
       },
@@ -375,11 +464,10 @@
           "category-games",
           "category-games-!cn",
           "steam",
-          "epicgames",
-          "googlefcm"
+          "epicgames"
         ],
         "action": "evaluate",
-        "server": "Cloudflare-DNS",
+        "server": "Game-Cloudflare-DNS",
         "tag": "games_2",
         "speculative": true,
         "remove_client_subnet": true
@@ -424,8 +512,7 @@
           "category-games",
           "category-games-!cn",
           "steam",
-          "epicgames",
-          "googlefcm"
+          "epicgames"
         ],
         "action": "predefined",
         "rcode": "SERVFAIL"
@@ -1152,7 +1239,8 @@
         "🇸🇬 新加坡",
         "🇯🇵 日本",
         "🇺🇸 美国"
-      ]
+      ],
+      "default": "🚀 节点选择"
     },
     {
       "type": "selector",
@@ -1280,8 +1368,11 @@
     {
       "type": "selector",
       "tag": "🌐 入口选择",
-      "outbounds": [],
-      "interrupt_exist_connections": false
+      "outbounds": [
+        "🇭🇰 香港-自动测速"
+      ],
+      "interrupt_exist_connections": false,
+      "default": "🇭🇰 香港-自动测速"
     },
     {
       "type": "selector",
